@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Beauty Picks | اختيارات الجمال</title>
+    <meta
+      name="description"
+      content="اختيارات الصحة والجمال بشكل أنيق — بحث، فلترة، ترتيب، ومودال تفاصيل + تتبع ضغطات الشراء (Front-end فقط)."
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="wrap topbar__inner">
+        <a class="brand" href="index.html" aria-label="الصفحة الرئيسية">
+          <span class="brand__dot"></span>
+          <span class="brand__name">Beauty Picks</span>
+        </a>
+
+        <nav class="nav">
+          <a class="nav__link is-active" href="index.html">الرئيسية</a>
+          <a class="nav__link" href="about.html">من نحن</a>
+          <a class="nav__link" href="privacy.html">الخصوصية</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap hero__inner">
+        <div class="hero__text">
+          <h1>اختيارات الجمال… بشكل محترم 😌💅</h1>
+          <p>
+            منتجات مختارة للصحة والجمال. تقدر تدور وتفلتر وتشوف التفاصيل قبل ما
+            تفتح صفحة المنتج.
+          </p>
+
+          <div class="hero__badges">
+            <span class="pill">بحث سريع</span>
+            <span class="pill">فلترة</span>
+            <span class="pill">ترتيب</span>
+            <span class="pill">تفاصيل مودال</span>
+            <span class="pill">تتبع ضغطات الشراء</span>
+          </div>
+
+          <div class="hero__note" role="note">
+            <strong>تنبيه أفلييت:</strong>
+            بعض الروابط روابط أفلييت — يعني ممكن نكسب عمولة بسيطة بدون تكلفة
+            إضافية عليك.
+            <span class="hero__noteSmall"
+              >بصفتي شريكًا في Amazon، أكسب من عمليات الشراء المؤهلة.</span
+            >
+          </div>
+        </div>
+
+        <div class="hero__card" aria-hidden="true">
+          <div class="hero__cardTop">
+            <div class="shine"></div>
+            <div class="hero__cardTitle">Glow Routine</div>
+            <div class="hero__cardSub">Skin + Hair + Devices</div>
+          </div>
+          <div class="hero__cardBottom">
+            <div class="miniStat">
+              <div class="miniStat__label">المعروض الآن</div>
+              <div class="miniStat__value" id="countProducts">0</div>
+            </div>
+            <div class="miniStat">
+              <div class="miniStat__label">ضغطات الشراء</div>
+              <div class="miniStat__value" id="countClicks">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main -->
+    <main class="wrap">
+      <!-- Controls -->
+      <section class="controls" aria-label="أدوات البحث والفلترة">
+        <div class="controls__row">
+          <div class="search">
+            <span class="search__icon" aria-hidden="true">⌕</span>
+            <input
+              id="searchInput"
+              class="search__input"
+              type="search"
+              placeholder="ابحث… (مثال: سيروم / ماسك / شعر)"
+              autocomplete="off"
+            />
+            <button
+              id="clearSearchBtn"
+              class="ghost"
+              type="button"
+              title="مسح البحث"
+            >
+              مسح
+            </button>
+          </div>
+
+          <div class="selects">
+            <label class="select">
+              <span class="select__label">التصنيف</span>
+              <select id="categorySelect">
+                <option value="all">الكل</option>
+                <option value="skincare">عناية بالبشرة</option>
+                <option value="haircare">عناية بالشعر</option>
+                <option value="devices">أجهزة</option>
+                <option value="supplements">مكملات</option>
+              </select>
+            </label>
+
+            <label class="select">
+              <span class="select__label">نوع البشرة</span>
+              <select id="skinSelect">
+                <option value="all">الكل</option>
+                <option value="oily">دهنية</option>
+                <option value="dry">جافة</option>
+                <option value="sensitive">حساسة</option>
+                <option value="combo">مختلطة</option>
+              </select>
+            </label>
+
+            <label class="select">
+              <span class="select__label">الترتيب</span>
+              <select id="sortSelect">
+                <option value="featured">المقترح</option>
+                <option value="rating_desc">الأعلى تقييمًا</option>
+                <option value="clicks_desc">الأكثر ضغطًا</option>
+                <option value="name_asc">الاسم (أ-ي)</option>
+                <option value="name_desc">الاسم (ي-أ)</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="controls__row controls__row--bottom">
+          <div class="chips" aria-label="فلترة سريعة">
+            <button class="chip is-active" data-chip="all" type="button">
+              الكل
+            </button>
+            <button class="chip" data-chip="oily" type="button">دهنية</button>
+            <button class="chip" data-chip="dry" type="button">جافة</button>
+            <button class="chip" data-chip="sensitive" type="button">
+              حساسة
+            </button>
+            <button class="chip" data-chip="combo" type="button">مختلطة</button>
+          </div>
+
+          <div class="actions">
+            <button id="resetClicksBtn" class="ghost" type="button">
+              تصفير عدّاد الضغطات
+            </button>
+            <button id="copySiteBtn" class="ghost" type="button">
+              نسخ رابط الصفحة
+            </button>
+          </div>
+        </div>
+
+        <p class="fineprint">
+          ⚠️ معلومات عامة فقط وليست نصيحة طبية. للمكملات/مشاكل الجلد الشديدة:
+          الأفضل استشارة مختص.
+        </p>
+      </section>
+
+      <!-- Featured -->
+      <section class="section">
+        <div class="section__head">
+          <h2 class="section__title">المقترحات</h2>
+          <p class="section__sub">مختارات “Safe & Popular” كبداية.</p>
+        </div>
+        <div class="products products--featured" id="featuredProducts"></div>
+      </section>
+
+      <!-- All Products -->
+      <section class="section">
+        <div class="section__head">
+          <h2 class="section__title">كل المنتجات</h2>
+          <p class="section__sub">
+            استخدم البحث/الفلترة/الترتيب عشان توصل بسرعة.
+          </p>
+        </div>
+
+        <div class="products" id="products"></div>
+
+        <p class="empty" id="emptyState" hidden>
+          مفيش نتائج مطابقة… جرّب بحث أقل أو فلترة مختلفة.
+        </p>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="wrap footer__inner">
+        <div class="footer__col">
+          <div class="footer__brand">Beauty Picks</div>
+          <div class="footer__small">
+            بصفتي شريكًا في Amazon، أكسب من عمليات الشراء المؤهلة.
+          </div>
+        </div>
+
+        <div class="footer__col footer__links">
+          <a href="about.html">من نحن</a>
+          <a href="privacy.html">سياسة الخصوصية</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" hidden aria-live="polite"></div>
+
+    <!-- Modal -->
+    <div class="modalBack" id="modalBack" hidden>
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <button
+          class="modal__close"
+          id="modalCloseBtn"
+          type="button"
+          aria-label="إغلاق"
+        >
+          ×
+        </button>
+
+        <img class="modal__img" id="modalImg" alt="" />
+
+        <div class="modal__body">
+          <div class="modal__top">
+            <h3 class="modal__title" id="modalTitle"></h3>
+            <div class="stars" id="modalStars" aria-label="تقييم المنتج"></div>
+          </div>
+
+          <p class="modal__desc" id="modalDesc"></p>
+
+          <div class="badges" id="modalBadges"></div>
+
+          <div class="modal__meta">
+            <div class="metaCard">
+              <div class="metaCard__label">ضغطات المنتج</div>
+              <div class="metaCard__value" id="modalClicks">0</div>
+            </div>
+            <div class="metaCard">
+              <div class="metaCard__label">معرّف</div>
+              <div class="metaCard__value" id="modalId">—</div>
+            </div>
+          </div>
+
+          <div class="modal__actions">
+            <a
+              class="btn"
+              id="modalBuyBtn"
+              href="#"
+              target="_blank"
+              rel="noopener"
+              >شاهد المنتج</a
+            >
+            <button class="ghost" id="modalCopyBtn" type="button">
+              نسخ اسم المنتج
+            </button>
+            <button class="ghost" id="modalCopyLinkBtn" type="button">
+              نسخ لينك المنتج
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
